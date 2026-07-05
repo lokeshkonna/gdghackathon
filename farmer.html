@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p id="test.data"></p>
+    <script>
+        const URL = "https://script.google.com/macros/s/AKfycbyAmCWg_qeuAvAvz1H6gpyoKr_51BPx7Ms6O4WhuxkYv-Lg3eRsqQ4BMoIvu0ZGwEhp/exec";
+
+        fetch(URL)
+        .then(res => res.json())
+        .then(data => {
+        document.getElementById("test.data").innerText = data.message;
+        });
+    function doGet(e) {
+    return ContentService.createTextOutput(
+    JSON.stringify({ status: "success", message: "Connected!" })
+    ).setMimeType(ContentService.MimeType.JSON);
+    }
+
+    function doPost(e) {
+  const data = JSON.parse(e.postData.contents);
+
+  // Example: Save to Google Sheet
+  const sheet = SpreadsheetApp
+    .openById("YOUR_SHEET_ID")
+    .getSheetByName("Sheet1");
+
+  sheet.appendRow([
+    data.name,
+    data.email,
+    new Date()
+  ]);
+
+  return ContentService.createTextOutput(
+    JSON.stringify({ status: "saved" })
+  ).setMimeType(ContentService.MimeType.JSON);
+}
+
+</script>
+</body>
+</html>

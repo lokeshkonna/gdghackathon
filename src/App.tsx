@@ -1,0 +1,46 @@
+import { Toaster } from "@/components/ui/toaster";
+import { Toaster as Sonner } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { LanguageProvider } from "@/contexts/LanguageContext";
+import { Login } from "./pages/Login";
+import { Dashboard } from "./pages/Dashboard";
+import { SoilAnalysis } from "./pages/SoilAnalysis";
+import { PestControl } from "./pages/PestControl";
+import { Weather } from "./pages/Weather";
+import { Market } from "./pages/Market";
+import { Chat } from "./pages/Chat";
+import { Schemes } from "./pages/Schemes";
+import NotFound from "./pages/NotFound";
+import FirebaseExample from "./pages/FirebaseExample";
+
+const queryClient = new QueryClient();
+
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <LanguageProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/soil-analysis" element={<SoilAnalysis />} />
+            <Route path="/pest-control" element={<PestControl />} />
+            <Route path="/weather" element={<Weather />} />
+            <Route path="/market" element={<Market />} />
+            <Route path="/chat" element={<Chat />} />
+            <Route path="/schemes" element={<Schemes />} />
+            <Route path="/firebase" element={<FirebaseExample />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </LanguageProvider>
+  </QueryClientProvider>
+);
+
+export default App;
